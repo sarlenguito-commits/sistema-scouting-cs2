@@ -1,0 +1,1469 @@
+{
+  "name": "Sistema de Scouting Automatizado — CS2 | Evaluación",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -208,
+        -304
+      ],
+      "id": "46e05ad7-cb75-461a-a1d6-98ddec48d8c7",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appQg0p4WXjLI8y3m",
+          "mode": "list",
+          "cachedResultName": "CS2",
+          "cachedResultUrl": "https://airtable.com/appQg0p4WXjLI8y3m"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblWuBcsP5LUhF0Yu",
+          "mode": "list",
+          "cachedResultName": "Candidatos",
+          "cachedResultUrl": "https://airtable.com/appQg0p4WXjLI8y3m/tblWuBcsP5LUhF0Yu"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        128,
+        -192
+      ],
+      "id": "649d41ac-10bb-4bfb-a312-23b937938e1a",
+      "name": "Search records",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "A4eGZznQbONT2kl2",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4bc77cb2-6240-4a99-86e9-4f33a116e8ff",
+              "leftValue": "={{ $json.fields.KD }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "2f61de72-18c3-476d-8080-87a076de5552",
+              "leftValue": "={{ $json.fields.Winrate }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        288,
+        -192
+      ],
+      "id": "c404f324-8769-4df1-871c-ebc31cb94dbd",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "55683a5e-8fb9-4436-ba0c-6fbe53d0aab8",
+              "leftValue": "={{ $json.fields.KD }}",
+              "rightValue": 0.95,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            },
+            {
+              "id": "127af5da-1b8b-428c-a13c-197b28a50a09",
+              "leftValue": "={{ $json.fields.Winrate }}",
+              "rightValue": 0.53,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        480,
+        -192
+      ],
+      "id": "7342dc37-f0e7-430d-b991-53a1e246f3c7",
+      "name": "Filtro numérico"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appQg0p4WXjLI8y3m",
+          "mode": "list",
+          "cachedResultName": "CS2",
+          "cachedResultUrl": "https://airtable.com/appQg0p4WXjLI8y3m"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblrDynbSodxslAlT",
+          "mode": "list",
+          "cachedResultName": "Config",
+          "cachedResultUrl": "https://airtable.com/appQg0p4WXjLI8y3m/tblrDynbSodxslAlT"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        -64,
+        -192
+      ],
+      "id": "43b168db-be6a-439d-a425-13292aa00695",
+      "name": "GET CONFIG",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "A4eGZznQbONT2kl2",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ae4ebbf3-a0ab-437f-a3d9-aad8180a2001",
+              "leftValue": "={{ $json.tieneCupo }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        848,
+        -368
+      ],
+      "id": "bc9e8c0e-4ce2-49dc-85ab-14f842035c12",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appQg0p4WXjLI8y3m",
+          "mode": "list",
+          "cachedResultName": "CS2",
+          "cachedResultUrl": "https://airtable.com/appQg0p4WXjLI8y3m"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblWuBcsP5LUhF0Yu",
+          "mode": "list",
+          "cachedResultName": "Candidatos",
+          "cachedResultUrl": "https://airtable.com/appQg0p4WXjLI8y3m/tblWuBcsP5LUhF0Yu"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Aprobado por scout": false,
+            "id": "=   {{ $json.id }}",
+            "Estado": "Error - Datos"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Jugador",
+              "displayName": "Jugador",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Player ID FACEIT",
+              "displayName": "Player ID FACEIT",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "KD",
+              "displayName": "KD",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Winrate",
+              "displayName": "Winrate",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Evaluando",
+                  "value": "Evaluando"
+                },
+                {
+                  "name": "Para revisión",
+                  "value": "Para revisión"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                },
+                {
+                  "name": "Error - Datos",
+                  "value": "Error - Datos"
+                },
+                {
+                  "name": "Error - IA",
+                  "value": "Error - IA"
+                },
+                {
+                  "name": "En espera",
+                  "value": "En espera"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aprobado por scout",
+              "displayName": "Aprobado por scout",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha última modificación",
+              "displayName": "Fecha última modificación",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        480,
+        32
+      ],
+      "id": "65cf7158-1104-4704-9616-067aff3a98ec",
+      "name": "Update - Error Datos",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "A4eGZznQbONT2kl2",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appQg0p4WXjLI8y3m",
+          "mode": "list",
+          "cachedResultName": "CS2",
+          "cachedResultUrl": "https://airtable.com/appQg0p4WXjLI8y3m"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblWuBcsP5LUhF0Yu",
+          "mode": "list",
+          "cachedResultName": "Candidatos",
+          "cachedResultUrl": "https://airtable.com/appQg0p4WXjLI8y3m/tblWuBcsP5LUhF0Yu"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Aprobado por scout": false,
+            "id": "={{ $json.id }}",
+            "Estado": "Rechazado - Umbral"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Jugador",
+              "displayName": "Jugador",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Player ID FACEIT",
+              "displayName": "Player ID FACEIT",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "KD",
+              "displayName": "KD",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Winrate",
+              "displayName": "Winrate",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Evaluando",
+                  "value": "Evaluando"
+                },
+                {
+                  "name": "Para revisión",
+                  "value": "Para revisión"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado - Umbral",
+                  "value": "Rechazado - Umbral"
+                },
+                {
+                  "name": "Error - Datos",
+                  "value": "Error - Datos"
+                },
+                {
+                  "name": "Error - IA",
+                  "value": "Error - IA"
+                },
+                {
+                  "name": "En espera",
+                  "value": "En espera"
+                },
+                {
+                  "name": "Rechazado - IA",
+                  "value": "Rechazado - IA"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aprobado por scout",
+              "displayName": "Aprobado por scout",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha última modificación",
+              "displayName": "Fecha última modificación",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Orden",
+              "displayName": "Orden",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Justificación IA",
+              "displayName": "Justificación IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        848,
+        -176
+      ],
+      "id": "f80c470a-51fe-445c-8ef7-b3c6e39dfe6f",
+      "name": "Update - Rechazado",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "A4eGZznQbONT2kl2",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appQg0p4WXjLI8y3m",
+          "mode": "list",
+          "cachedResultName": "CS2",
+          "cachedResultUrl": "https://airtable.com/appQg0p4WXjLI8y3m"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblWuBcsP5LUhF0Yu",
+          "mode": "list",
+          "cachedResultName": "Candidatos",
+          "cachedResultUrl": "https://airtable.com/appQg0p4WXjLI8y3m/tblWuBcsP5LUhF0Yu"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Aprobado por scout": false,
+            "id": "={{ $json.id }}",
+            "Estado": "En espera"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Jugador",
+              "displayName": "Jugador",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Player ID FACEIT",
+              "displayName": "Player ID FACEIT",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "KD",
+              "displayName": "KD",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Winrate",
+              "displayName": "Winrate",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Evaluando",
+                  "value": "Evaluando"
+                },
+                {
+                  "name": "Para revisión",
+                  "value": "Para revisión"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                },
+                {
+                  "name": "Error - Datos",
+                  "value": "Error - Datos"
+                },
+                {
+                  "name": "Error - IA",
+                  "value": "Error - IA"
+                },
+                {
+                  "name": "En espera",
+                  "value": "En espera"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aprobado por scout",
+              "displayName": "Aprobado por scout",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha última modificación",
+              "displayName": "Fecha última modificación",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1072,
+        -192
+      ],
+      "id": "136e1102-26fc-4be4-9b57-c8b64a25529e",
+      "name": "Update - En Espera",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "A4eGZznQbONT2kl2",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const cuposOcupados = $('GET CONFIG').first().json.fields['Cupos ocupados'];\nconst cuposTotales = $('GET CONFIG').first().json.fields['Cupos totales'];\nlet disponibles = cuposTotales - cuposOcupados;\n\nconst items = $input.all().sort((a, b) => {\n  const puntajeA = a.json.fields['KD'] + a.json.fields['Winrate'];\n  const puntajeB = b.json.fields['KD'] + b.json.fields['Winrate'];\n  return puntajeB - puntajeA; // orden descendente: mejor puntaje primero\n});\n\nfor (const item of items) {\n  if (disponibles > 0) {\n    item.json.tieneCupo = true;\n    disponibles--;\n  } else {\n    item.json.tieneCupo = false;\n  }\n}\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        -368
+      ],
+      "id": "2a0c99af-be39-449a-81a1-59bbc657c30b",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appQg0p4WXjLI8y3m",
+          "mode": "list",
+          "cachedResultName": "CS2",
+          "cachedResultUrl": "https://airtable.com/appQg0p4WXjLI8y3m"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblGwPKXQ3lKNF5Dw",
+          "mode": "list",
+          "cachedResultName": "Reglas de Reclutamiento",
+          "cachedResultUrl": "https://airtable.com/appQg0p4WXjLI8y3m/tblGwPKXQ3lKNF5Dw"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        -64,
+        -416
+      ],
+      "id": "99508a1f-aa19-4b90-a753-ad43fabb5f76",
+      "name": "GET RAG",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "A4eGZznQbONT2kl2",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3.6-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-3.6-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Sos un scout experto de esports evaluando candidatos para un equipo semi-profesional de CS2.\n\nDatos del candidato:\n- Jugador: {{ $json.fields.Jugador }}\n- KD: {{ $json.fields.KD }}\n- Winrate: {{ $json.fields.Winrate }}\n\nReglas de reclutamiento del equipo (evaluá al candidato contra estos 4 criterios):\n{{ $('GET RAG').all().map(item => '- ' + item.json.fields['Criterio'] + ': ' + item.json.fields['Descripción']).join('\\n') }}\n\nEvaluá cualitativamente si este candidato debería ser reclutado, considerando tanto sus números como los criterios de arriba. Respondé en este formato exacto:\nDecisión: [APROBADO/RECHAZADO]\nJustificación: [2-3 líneas explicando tu razonamiento]"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        1072,
+        -464
+      ],
+      "id": "dc615e6d-8d36-45b1-9c7c-10c60f195383",
+      "name": "Message a model",
+      "retryOnFail": true,
+      "waitBetweenTries": 3000,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Zf5vGeKpPUdoOwm0",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "93e4953f-55bf-472e-9d7b-6bd481bc01d2",
+              "leftValue": "={{ $json.content.parts[0].text }}",
+              "rightValue": " APROBADO",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1376,
+        -464
+      ],
+      "id": "832648aa-7f09-47fb-82a9-278626081da5",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f487388d-5bc4-491d-ad66-144625e06b89",
+              "name": "id",
+              "value": "={{ $('If1').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "7bdbae9e-8cc1-47df-aa52-41abca09c64c",
+              "name": "justificacion",
+              "value": "={{ $json.content.parts[0].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1600,
+        -560
+      ],
+      "id": "1be7bc3b-1af7-4b8b-8bd7-82de92f1a405",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appQg0p4WXjLI8y3m",
+          "mode": "list",
+          "cachedResultName": "CS2",
+          "cachedResultUrl": "https://airtable.com/appQg0p4WXjLI8y3m"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblWuBcsP5LUhF0Yu",
+          "mode": "list",
+          "cachedResultName": "Candidatos",
+          "cachedResultUrl": "https://airtable.com/appQg0p4WXjLI8y3m/tblWuBcsP5LUhF0Yu"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id }}",
+            "Estado": "Para revisión",
+            "Justificación IA": "=   {{ $json.justificacion }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Jugador",
+              "displayName": "Jugador",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Player ID FACEIT",
+              "displayName": "Player ID FACEIT",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "KD",
+              "displayName": "KD",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Winrate",
+              "displayName": "Winrate",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Evaluando",
+                  "value": "Evaluando"
+                },
+                {
+                  "name": "Para revisión",
+                  "value": "Para revisión"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado - Umbral",
+                  "value": "Rechazado - Umbral"
+                },
+                {
+                  "name": "Error - Datos",
+                  "value": "Error - Datos"
+                },
+                {
+                  "name": "Error - IA",
+                  "value": "Error - IA"
+                },
+                {
+                  "name": "En espera",
+                  "value": "En espera"
+                },
+                {
+                  "name": "Rechazado - IA",
+                  "value": "Rechazado - IA"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aprobado por scout",
+              "displayName": "Aprobado por scout",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Fecha última modificación",
+              "displayName": "Fecha última modificación",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Orden",
+              "displayName": "Orden",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Justificación IA",
+              "displayName": "Justificación IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1776,
+        -672
+      ],
+      "id": "ad7ec047-1148-410b-b671-65bbcd0f9d5c",
+      "name": "Update - Para Revisión",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "A4eGZznQbONT2kl2",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6a773dc9-b390-4356-91c8-d9cf23fffee1",
+              "name": "id",
+              "value": "={{ $('If1').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "74d14e42-bd59-449d-98d6-f4bf56e04045",
+              "name": "justificacion ",
+              "value": "={{ $json.content.parts[0].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1600,
+        -368
+      ],
+      "id": "8d2ab092-7d5f-46d2-9f15-95e9571f97a6",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appQg0p4WXjLI8y3m",
+          "mode": "list",
+          "cachedResultName": "CS2",
+          "cachedResultUrl": "https://airtable.com/appQg0p4WXjLI8y3m"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblWuBcsP5LUhF0Yu",
+          "mode": "list",
+          "cachedResultName": "Candidatos",
+          "cachedResultUrl": "https://airtable.com/appQg0p4WXjLI8y3m/tblWuBcsP5LUhF0Yu"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id }}",
+            "Estado": "=Rechazado - IA",
+            "Justificación IA": "=   {{ $json.justificacion }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Jugador",
+              "displayName": "Jugador",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Player ID FACEIT",
+              "displayName": "Player ID FACEIT",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "KD",
+              "displayName": "KD",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Winrate",
+              "displayName": "Winrate",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Evaluando",
+                  "value": "Evaluando"
+                },
+                {
+                  "name": "Para revisión",
+                  "value": "Para revisión"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado - Umbral",
+                  "value": "Rechazado - Umbral"
+                },
+                {
+                  "name": "Error - Datos",
+                  "value": "Error - Datos"
+                },
+                {
+                  "name": "Error - IA",
+                  "value": "Error - IA"
+                },
+                {
+                  "name": "En espera",
+                  "value": "En espera"
+                },
+                {
+                  "name": "Rechazado - IA",
+                  "value": "Rechazado - IA"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aprobado por scout",
+              "displayName": "Aprobado por scout",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Fecha última modificación",
+              "displayName": "Fecha última modificación",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Orden",
+              "displayName": "Orden",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Justificación IA",
+              "displayName": "Justificación IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1776,
+        -240
+      ],
+      "id": "1d4a6083-e8d7-4cfe-aadc-3bb21a83e273",
+      "name": "Update - Rechazado IA\"",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "A4eGZznQbONT2kl2",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "GET CONFIG",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GET RAG",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search records": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Filtro numérico",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update - Error Datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtro numérico": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update - Rechazado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET CONFIG": {
+      "main": [
+        [
+          {
+            "node": "Search records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update - En Espera",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET RAG": {
+      "main": [
+        []
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Update - Para Revisión",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Update - Rechazado IA\"",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "94584abf-cc5c-4323-98c6-78338dc2e9ba",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "fba2dc2f0c7b7b1830c5d16006ce1909f49cfb42dc431b234297171b72e3e900"
+  },
+  "nodeGroups": [],
+  "id": "ps6Xjgtg3w5hDHr5",
+  "tags": []
+}
