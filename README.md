@@ -72,4 +72,6 @@ Los nodos que dependen de servicios externos (Google Gemini, Airtable, CallMeBot
 
 ## 👤 Autor
 
+Esteban Sarlengo
+
 Proyecto desarrollado como entrega final de la carrera IA AUTOMATION de Coderhouse.
