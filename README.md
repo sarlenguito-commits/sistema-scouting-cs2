@@ -60,7 +60,7 @@ El sistema fue probado en corridas reales de punta a punta. Como evidencia más 
 
 > *"Nuevo recluta: Wimbo (KD 0.96, Winrate 0.53) fue APROBADO."*
 
-Esta captura, junto con el resto de la evidencia (canvas de ambos workflows ejecutados exitosamente, estados en Airtable, justificaciones generadas por la IA), está incluida en el PDF de documentación.
+Esta captura, junto con el resto de la evidencia (canvas de ambos workflows ejecutados exitosamente, estados en Airtable, justificaciones generadas por la IA), está incluida en el PDF de documentación. En la corrida final —ya con Retry On Fail activo en los nodos críticos—, **TopPlayer** fue el último candidato validado de punta a punta, completando exitosamente todo el pipeline del Workflow 2.
 
 ---
 
