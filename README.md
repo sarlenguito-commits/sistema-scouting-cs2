@@ -1,6 +1,6 @@
 # 🎯 Sistema de Scouting Automatizado — CS2
 
-Proyecto Final — Carrera Desarrollador Full Stack (Coderhouse)
+Proyecto Final — Curso de Automatización con IA (Coderhouse)
 **Entrega Final: Ecosistema de Automatización IA Autónomo para Negocios**
 
 ---
